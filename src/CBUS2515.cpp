@@ -66,6 +66,7 @@ void CBUS2515::initMembers() {
   eventhandler = NULL;
   eventhandlerex = NULL;
   framehandler = NULL;
+  transmithandler = NULL;
   _csPin = MCP2515_CS;
   _intPin = MCP2515_INT;
   _osc_freq = OSCFREQ;
