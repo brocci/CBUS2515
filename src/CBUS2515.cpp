@@ -113,8 +113,10 @@ bool CBUS2515::begin(bool poll, SPIClass & spi)
   spi.setCS(_csPin);
 #endif
 
-  // start SPI
+#ifndef ARDUINO_ARCH_ESP32
+  // start SPI, except for ESP32
   spi.begin();
+#endif
 
   // instantiate CAN bus object
   // if in polling mode, the interrupt pin and ISR not used
