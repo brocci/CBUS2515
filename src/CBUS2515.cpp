@@ -66,6 +66,7 @@ void CBUS2515::initMembers() {
   eventhandler = NULL;
   eventhandlerex = NULL;
   framehandler = NULL;
+  _spi = NULL;
   transmithandler = NULL;
   _csPin = MCP2515_CS;
   _intPin = MCP2515_INT;
@@ -89,6 +90,7 @@ bool CBUS2515::begin(bool poll, SPIClass & spi)
   _numMsgsSent = 0;
   _numMsgsRcvd = 0;
   _poll = poll;
+  _spi = &spi;
 
   ACAN2515Settings settings(_osc_freq, CANBITRATE);
 
@@ -247,9 +249,15 @@ void CBUS2515::printStatus(void) {
 //
 
 void CBUS2515::reset(void) {
-  canp->end();
-  delete canp;
-  begin();
+  if (canp != nullptr) {
+    canp->end();
+    delete canp;
+    canp = nullptr;
+  }
+
+  if (_spi != nullptr) {
+    begin(_poll, *_spi);
+  }
 }
 
 //

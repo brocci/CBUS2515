@@ -100,5 +100,8 @@ private:
 
 #ifdef ARDUINO_ARCH_RP2040
   byte _mosi_pin, _miso_pin, _sck_pin;
+  SPIClassRP2040* _spi;
+#else
+  SPIClass* _spi;
 #endif
 };
